@@ -24,6 +24,16 @@ export async function updateLead(id: string, data: Partial<Lead>): Promise<Lead>
   return res.json();
 }
 
+export async function askLead(id: string, question: string): Promise<{ message: string }> {
+  const res = await fetch(`${API}/api/leads/${id}/ask`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question }),
+  });
+  if (!res.ok) throw new Error("Failed to send follow-up");
+  return res.json();
+}
+
 export async function simulateMessage(
   telefon: string,
   message: string,

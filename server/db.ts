@@ -14,8 +14,14 @@ db.exec(`
     adresse TEXT,
     dachtyp TEXT,
     flaeche_qm INTEGER,
+    dach_alter TEXT,
+    zustand_notizen TEXT,
     budget TEXT,
     dringlichkeit TEXT CHECK(dringlichkeit IN ('hoch', 'mittel', 'niedrig')),
+    energieberater TEXT CHECK(energieberater IN ('ja', 'nein', 'unbekannt')),
+    photovoltaik TEXT CHECK(photovoltaik IN ('ja', 'nein', 'unbekannt')),
+    entscheidungstraeger TEXT,
+    termin TEXT,
     status TEXT NOT NULL DEFAULT 'neu' CHECK(status IN ('neu', 'qualifiziert', 'termin_geplant', 'abgelehnt')),
     zusammenfassung TEXT,
     kanal TEXT NOT NULL CHECK(kanal IN ('whatsapp', 'sms')),
@@ -27,6 +33,8 @@ db.exec(`
     lead_id TEXT NOT NULL REFERENCES leads(id),
     role TEXT NOT NULL CHECK(role IN ('lead', 'agent')),
     content TEXT NOT NULL,
+    media_url TEXT,
+    media_type TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 `);
@@ -58,10 +66,10 @@ export function updateLead(id: string, data: Partial<Lead>) {
   db.prepare(`UPDATE leads SET ${fields} WHERE id = @id`).run({ ...data, id });
 }
 
-export function addMessage(leadId: string, role: "lead" | "agent", content: string) {
+export function addMessage(leadId: string, role: "lead" | "agent", content: string, mediaUrl?: string, mediaType?: string) {
   db.prepare(
-    `INSERT INTO messages (lead_id, role, content) VALUES (?, ?, ?)`
-  ).run(leadId, role, content);
+    `INSERT INTO messages (lead_id, role, content, media_url, media_type) VALUES (?, ?, ?, ?, ?)`
+  ).run(leadId, role, content, mediaUrl ?? null, mediaType ?? null);
 }
 
 export function getMessages(leadId: string) {
@@ -83,8 +91,14 @@ export interface Lead {
   adresse: string | null;
   dachtyp: string | null;
   flaeche_qm: number | null;
+  dach_alter: string | null;
+  zustand_notizen: string | null;
   budget: string | null;
   dringlichkeit: "hoch" | "mittel" | "niedrig" | null;
+  energieberater: "ja" | "nein" | "unbekannt" | null;
+  photovoltaik: "ja" | "nein" | "unbekannt" | null;
+  entscheidungstraeger: string | null;
+  termin: string | null;
   status: "neu" | "qualifiziert" | "termin_geplant" | "abgelehnt";
   zusammenfassung: string | null;
   kanal: "whatsapp" | "sms";
@@ -96,6 +110,8 @@ export interface Message {
   lead_id: string;
   role: "lead" | "agent";
   content: string;
+  media_url: string | null;
+  media_type: string | null;
   created_at: string;
 }
 

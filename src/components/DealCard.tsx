@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Lead } from "@/types/lead";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -26,7 +27,7 @@ const urgencyConfig = {
 
 const kanalIcons = { whatsapp: MessageCircle, sms: MessageSquare };
 
-export function DealCard({ lead, selected, onSelect }: { lead: Lead; selected?: boolean; onSelect?: (id: string) => void }) {
+export const DealCard = memo(function DealCard({ lead, selected, onSelect }: { lead: Lead; selected?: boolean; onSelect?: (id: string) => void }) {
   const updateLead = useUpdateLead();
   const KanalIcon = kanalIcons[lead.kanal];
 
@@ -114,4 +115,4 @@ export function DealCard({ lead, selected, onSelect }: { lead: Lead; selected?: 
       </CardFooter>
     </Card>
   );
-}
+});
