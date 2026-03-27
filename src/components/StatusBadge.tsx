@@ -1,19 +1,17 @@
-import { LeadStatus } from "@/types/lead";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import type { LeadStatus } from "@/types/lead";
 
-const statusConfig: Record<LeadStatus, { label: string; className: string }> = {
-  neu: { label: "Neu", className: "bg-primary/20 text-primary border-primary/30" },
-  qualifiziert: { label: "Qualifiziert", className: "bg-success/20 text-success border-success/30" },
-  termin_geplant: { label: "Termin geplant", className: "bg-blue-500/20 text-blue-400 border-blue-500/30" },
-  abgelehnt: { label: "Abgelehnt", className: "bg-destructive/20 text-destructive border-destructive/30" },
+const config: Record<LeadStatus, { label: string; className: string }> = {
+  neu: { label: "New", className: "bg-blue-500/15 text-blue-400 border-blue-500/30" },
+  qualifiziert: { label: "Qualified", className: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+  termin_geplant: { label: "Scheduled", className: "bg-violet-500/15 text-violet-400 border-violet-500/30" },
+  abgelehnt: { label: "Rejected", className: "bg-zinc-500/15 text-zinc-400 border-zinc-500/30" },
 };
 
 export function StatusBadge({ status }: { status: LeadStatus }) {
-  const config = statusConfig[status];
+  const { label, className } = config[status];
   return (
-    <Badge variant="outline" className={cn("font-mono text-xs uppercase tracking-wider", config.className)}>
-      {config.label}
-    </Badge>
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-mono font-semibold ${className}`}>
+      {label}
+    </span>
   );
 }

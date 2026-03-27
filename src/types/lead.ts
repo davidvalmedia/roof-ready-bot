@@ -1,16 +1,30 @@
 export type LeadStatus = "neu" | "qualifiziert" | "termin_geplant" | "abgelehnt";
+export type Dringlichkeit = "hoch" | "mittel" | "niedrig";
+export type Kanal = "whatsapp" | "sms";
 
 export interface Lead {
   id: string;
-  name: string;
+  name: string | null;
   telefon: string;
-  adresse: string;
-  dachtyp: string;
-  flaeche_qm: number;
-  budget: string;
-  dringlichkeit: "hoch" | "mittel" | "niedrig";
+  adresse: string | null;
+  dachtyp: string | null;
+  flaeche_qm: number | null;
+  budget: string | null;
+  dringlichkeit: Dringlichkeit | null;
   status: LeadStatus;
-  zusammenfassung: string;
-  erstelltAm: string;
-  kanal: "whatsapp" | "sms";
+  zusammenfassung: string | null;
+  kanal: Kanal;
+  created_at: string;
+}
+
+export interface Message {
+  id: number;
+  lead_id: string;
+  role: "lead" | "agent";
+  content: string;
+  created_at: string;
+}
+
+export interface LeadWithMessages extends Lead {
+  messages: Message[];
 }

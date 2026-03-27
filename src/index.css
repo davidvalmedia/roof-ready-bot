@@ -1,47 +1,104 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@theme {
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Border radius */
+  --radius: 0.5rem;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Colours – design tokens */
+  --color-background: hsl(220 15% 10%);
+  --color-foreground: hsl(40 10% 90%);
+
+  --color-card: hsl(220 12% 14%);
+  --color-card-foreground: hsl(40 10% 90%);
+
+  --color-popover: hsl(220 12% 14%);
+  --color-popover-foreground: hsl(40 10% 90%);
+
+  --color-primary: hsl(36 95% 55%);
+  --color-primary-foreground: hsl(220 15% 8%);
+
+  --color-secondary: hsl(220 10% 20%);
+  --color-secondary-foreground: hsl(40 10% 85%);
+
+  --color-muted: hsl(220 10% 18%);
+  --color-muted-foreground: hsl(220 10% 55%);
+
+  --color-accent: hsl(36 95% 55%);
+  --color-accent-foreground: hsl(220 15% 8%);
+
+  --color-destructive: hsl(0 72% 51%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+
+  --color-success: hsl(142 72% 45%);
+  --color-success-foreground: hsl(0 0% 100%);
+
+  --color-warning: hsl(36 95% 55%);
+  --color-warning-foreground: hsl(220 15% 8%);
+
+  --color-border: hsl(220 10% 22%);
+  --color-input: hsl(220 10% 22%);
+  --color-ring: hsl(36 95% 55%);
+
+  /* Sidebar */
+  --color-sidebar: hsl(220 15% 8%);
+  --color-sidebar-foreground: hsl(40 10% 90%);
+  --color-sidebar-primary: hsl(36 95% 55%);
+  --color-sidebar-primary-foreground: hsl(220 15% 8%);
+  --color-sidebar-accent: hsl(220 10% 18%);
+  --color-sidebar-accent-foreground: hsl(40 10% 90%);
+  --color-sidebar-border: hsl(220 10% 22%);
+  --color-sidebar-ring: hsl(36 95% 55%);
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+}
+
+/* Shadcn/ui CSS variables (still needed by component source code) */
 @layer base {
   :root {
     --background: 220 15% 10%;
     --foreground: 40 10% 90%;
-
     --card: 220 12% 14%;
     --card-foreground: 40 10% 90%;
-
     --popover: 220 12% 14%;
     --popover-foreground: 40 10% 90%;
-
     --primary: 36 95% 55%;
     --primary-foreground: 220 15% 8%;
-
     --secondary: 220 10% 20%;
     --secondary-foreground: 40 10% 85%;
-
     --muted: 220 10% 18%;
     --muted-foreground: 220 10% 55%;
-
     --accent: 36 95% 55%;
     --accent-foreground: 220 15% 8%;
-
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-
     --success: 142 72% 45%;
     --success-foreground: 0 0% 100%;
-
     --warning: 36 95% 55%;
     --warning-foreground: 220 15% 8%;
-
     --border: 220 10% 22%;
     --input: 220 10% 22%;
     --ring: 36 95% 55%;
-
     --radius: 0.5rem;
-
     --sidebar-background: 220 15% 8%;
     --sidebar-foreground: 40 10% 90%;
     --sidebar-primary: 36 95% 55%;
@@ -50,19 +107,17 @@
     --sidebar-accent-foreground: 40 10% 90%;
     --sidebar-border: 220 10% 22%;
     --sidebar-ring: 36 95% 55%;
-
-    --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Inter', system-ui, sans-serif;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: var(--font-sans);
   }
 }
